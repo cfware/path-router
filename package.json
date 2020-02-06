@@ -1,0 +1,34 @@
+{
+	"name": "@cfware/path-router",
+	"version": "0.1.0",
+	"description": "Basic path based callback routing",
+	"main": "path-router.js",
+	"type": "module",
+	"scripts": {
+		"release": "standard-version --sign",
+		"pretest": "cfware-lint .",
+		"test": "c8 node test.js"
+	},
+	"engines": {
+		"node": ">=13.7.0"
+	},
+	"author": "Corey Farrell",
+	"license": "MIT",
+	"keywords": [],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cfware/path-router.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cfware/path-router/issues"
+	},
+	"homepage": "https://github.com/cfware/path-router#readme",
+	"devDependencies": {
+		"standard-version": "^7.1.0"
+	},
+	"dependencies": {
+		"@cfware/lint": "^1.1.1",
+		"c8": "^7.0.1",
+		"libtap": "^0.2.0"
+	}
+}
