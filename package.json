@@ -1,6 +1,6 @@
 {
 	"name": "@cfware/path-router",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Basic path based callback routing",
 	"main": "path-router.js",
 	"exports": "./path-router.js",

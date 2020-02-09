@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/cfware/path-router/compare/v0.1.1...v0.1.2) (2020-02-09)
+
+
+### Features
+
+* Create PathRouter#addPrefix ([3fa1b0a](https://github.com/cfware/path-router/commit/3fa1b0a750cfc791b48504c0185734083f71c6e6))
+
 ### [0.1.1](https://github.com/cfware/path-router/compare/v0.1.0...v0.1.1) (2020-02-06)
 
 
