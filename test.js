@@ -1,6 +1,7 @@
 import t from 'libtap';
 
-import PathRouter from './path-router.js';
+// eslint-disable-next-line import/no-unresolved
+import PathRouter from '@cfware/path-router';
 
 const fn0 = () => {};
 
@@ -11,11 +12,13 @@ t.test('PathRouter is a function', async t => {
 t.test('errors', async t => {
 	const pathRouter = new PathRouter();
 
-	pathRouter.add('', fn0);
-	pathRouter.addRouter('', fn0);
+	pathRouter.add('/', fn0);
+	pathRouter.addRouter('/', fn0);
 
-	t.throws(() => pathRouter.add('', fn0));
-	t.throws(() => pathRouter.addRouter('', fn0));
+	t.throws(() => pathRouter.add('/', fn0), new Error('Route already exists for /'));
+	t.throws(() => pathRouter.addRouter('/', fn0), new Error('Subroute already exists for /'));
+	t.throws(() => pathRouter.addPrefix('/', fn0), new Error('Subroute already exists for /'));
+	t.throws(() => pathRouter.addPrefix('/ok'), new TypeError('callback must be a function'));
 });
 
 t.test('totally empty route returns undefined', async t => {
@@ -31,7 +34,7 @@ t.test('executeRoute', async t => {
 	const pathRouter = new PathRouter((...args) => info.defaultPath.push(args));
 	pathRouter.add('', (...args) => info.blankPath.push(args));
 	pathRouter.add('path/page', (...args) => info.pathPage.push(args));
-	pathRouter.addRouter('route', new PathRouter((...args) => info.routePath.push(args)));
+	pathRouter.addPrefix('route', (...args) => info.routePath.push(args));
 	pathRouter.addRouter('nullroute', new PathRouter());
 
 	const testPath = (id, path, expected) => {

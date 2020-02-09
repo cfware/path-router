@@ -10,7 +10,7 @@ Basic path based callback routing.
 
 ### Install @cfware/path-router
 
-This module requires node.js 8 or above.
+This module requires node.js 13.8.0 or above.
 
 ```sh
 npm i --save @cfware/path-router
@@ -22,22 +22,11 @@ npm i --save @cfware/path-router
 import PathRouter from '@cfware/path-router';
 
 const root = new PathRouter(() => '404 Page');
-root.add('welcome', () => 'Welcome Page');
-root.add('software', () => 'Software Page');
-root.add('user', () => 'User List Page');
-root.addRoute('user/', tailPath => `User Page for ${tailPath}`);
-
-const usersRouter = new PathRouter(() => 'Unknown User');
-sub
-```
-
-## Running tests
-
-Tests are provided by xo and ava.
-
-```sh
-npm install
-npm test
+root.add('/welcome', () => 'Welcome Page');
+root.add('/software', () => 'Software Page');
+root.add('/user/', () => 'User List Page');
+root.addPrefix('/user/', (tailPath, fullPath) => `User Page for ${tailPath}, fullPath: ${fullPath}`);
+root.addRoute('/prefix/', new PathRouter((tailPath, fullPath) => `Prefix route hit for tail path ${tailPath}`));
 ```
 
 [npm-image]: https://img.shields.io/npm/v/@cfware/path-router.svg

@@ -3,6 +3,7 @@
 	"version": "0.1.1",
 	"description": "Basic path based callback routing",
 	"main": "path-router.js",
+	"exports": "./path-router.js",
 	"type": "module",
 	"scripts": {
 		"release": "standard-version --sign",

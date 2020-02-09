@@ -2,16 +2,28 @@ class PathRouter {
 	_exactRoutes = {};
 	_routers = {};
 
-	constructor(defaultFn) {
-		this._defaultFn = defaultFn;
+	constructor(defaultCallback) {
+		this._defaultCallback = defaultCallback;
 	}
 
-	add(pathname, fn) {
+	add(pathname, callback) {
 		if (pathname in this._exactRoutes) {
 			throw new Error(`Route already exists for ${pathname}`);
 		}
 
-		this._exactRoutes[pathname] = fn;
+		this._exactRoutes[pathname] = callback;
+	}
+
+	addPrefix(basepath, callback) {
+		if (typeof callback !== 'function') {
+			throw new TypeError('callback must be a function');
+		}
+
+		if (basepath in this._routers) {
+			throw new Error(`Subroute already exists for ${basepath}`);
+		}
+
+		this._routers[basepath] = new PathRouter(callback);
 	}
 
 	addRouter(basepath, pathRouter) {
@@ -33,14 +45,14 @@ class PathRouter {
 		if (typeof subrouterPath === 'string') {
 			const router = this._routers[subrouterPath];
 			const tailPath = pathname.replace(subrouterPath, '');
-			const fn = router.findRoute(tailPath);
-			if (fn) {
-				return fn;
+			const callback = router.findRoute(tailPath);
+			if (callback) {
+				return callback;
 			}
 		}
 
-		if (this._defaultFn) {
-			return fullPath => this._defaultFn(pathname, fullPath);
+		if (this._defaultCallback) {
+			return fullPath => this._defaultCallback(pathname, fullPath);
 		}
 	}
 
