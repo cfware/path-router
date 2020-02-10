@@ -18,7 +18,6 @@ t.test('errors', async t => {
 	t.throws(() => pathRouter.add('/', fn0), new Error('Route already exists for /'));
 	t.throws(() => pathRouter.addRouter('/', fn0), new Error('Subroute already exists for /'));
 	t.throws(() => pathRouter.addPrefix('/', fn0), new Error('Subroute already exists for /'));
-	t.throws(() => pathRouter.addPrefix('/ok'), new TypeError('callback must be a function'));
 });
 
 t.test('totally empty route returns undefined', async t => {
@@ -31,11 +30,19 @@ t.test('totally empty route returns undefined', async t => {
 t.test('executeRoute', async t => {
 	const info = {};
 
-	const pathRouter = new PathRouter((...args) => info.defaultPath.push(args));
-	pathRouter.add('', (...args) => info.blankPath.push(args));
-	pathRouter.add('path/page', (...args) => info.pathPage.push(args));
-	pathRouter.addPrefix('route', (...args) => info.routePath.push(args));
-	pathRouter.addRouter('nullroute', new PathRouter());
+	const pathRouter = new PathRouter({
+		defaultCallback: (...args) => info.defaultPath.push(args),
+		exact: {
+			'': (...args) => info.blankPath.push(args),
+			'path/page': (...args) => info.pathPage.push(args)
+		},
+		routers: {
+			nullroute: new PathRouter()
+		},
+		prefixes: {
+			route: (...args) => info.routePath.push(args)
+		}
+	});
 
 	const testPath = (id, path, expected) => {
 		info[id] = [];

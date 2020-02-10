@@ -1,9 +1,38 @@
+const defaultOptions = {
+	exact: {},
+	prefixes: {},
+	routers: {}
+};
+
 class PathRouter {
 	_exactRoutes = {};
 	_routers = {};
 
-	constructor(defaultCallback) {
-		this._defaultCallback = defaultCallback;
+	constructor(options) {
+		if (typeof options === 'function') {
+			options = {
+				...defaultOptions,
+				defaultCallback: options
+			};
+		} else {
+			options = {
+				...defaultOptions,
+				...options
+			};
+		}
+
+		this._defaultCallback = options.defaultCallback;
+		for (const [pathname, callback] of Object.entries(options.exact)) {
+			this.add(pathname, callback);
+		}
+
+		for (const [basepath, prefixOptions] of Object.entries(options.prefixes)) {
+			this.addPrefix(basepath, prefixOptions);
+		}
+
+		for (const [basepath, pathRouter] of Object.entries(options.routers)) {
+			this.addRouter(basepath, pathRouter);
+		}
 	}
 
 	add(pathname, callback) {
@@ -14,16 +43,12 @@ class PathRouter {
 		this._exactRoutes[pathname] = callback;
 	}
 
-	addPrefix(basepath, callback) {
-		if (typeof callback !== 'function') {
-			throw new TypeError('callback must be a function');
-		}
-
+	addPrefix(basepath, prefixOptions) {
 		if (basepath in this._routers) {
 			throw new Error(`Subroute already exists for ${basepath}`);
 		}
 
-		this._routers[basepath] = new PathRouter(callback);
+		this._routers[basepath] = new PathRouter(prefixOptions);
 	}
 
 	addRouter(basepath, pathRouter) {
