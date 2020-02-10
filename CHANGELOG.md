@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/cfware/path-router/compare/v0.1.2...v0.1.3) (2020-02-10)
+
+
+### Features
+
+* Accept options object to constructor ([63201f6](https://github.com/cfware/path-router/commit/63201f6981a6ea3198c255427a13f01493b1b25c))
+
 ### [0.1.2](https://github.com/cfware/path-router/compare/v0.1.1...v0.1.2) (2020-02-09)
 
 
