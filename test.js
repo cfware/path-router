@@ -40,7 +40,8 @@ t.test('executeRoute', async t => {
 			nullroute: new PathRouter()
 		},
 		prefixes: {
-			route: (...args) => info.routePath.push(args)
+			route: (...args) => info.routePath.push(args),
+			'route/other': (...args) => info.routePath.push(args)
 		}
 	});
 
@@ -58,5 +59,7 @@ t.test('executeRoute', async t => {
 	testPath('defaultPath', 'path/page/sub', ['path/page/sub', 'path/page/sub']);
 	testPath('routePath', 'route', ['', 'route']);
 	testPath('routePath', 'route/sub', ['/sub', 'route/sub']);
+	testPath('routePath', 'route/other', ['', 'route/other']);
+	testPath('routePath', 'route/other/sub', ['/sub', 'route/other/sub']);
 	testPath('defaultPath', 'nullroute', ['nullroute', 'nullroute']);
 });
