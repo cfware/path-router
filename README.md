@@ -39,7 +39,7 @@ const root = new PathRouter({
 
 [npm-image]: https://img.shields.io/npm/v/@cfware/path-router.svg
 [npm-url]: https://npmjs.org/package/@cfware/path-router
-[tests-status]: https://github.com/cfware/activity-monitor/workflows/Tests/badge.svg
+[tests-status]: https://github.com/cfware/path-router/workflows/Tests/badge.svg
 [gk-image]: https://badges.greenkeeper.io/cfware/path-router.svg
 [downloads-image]: https://img.shields.io/npm/dm/@cfware/path-router.svg
 [downloads-url]: https://npmjs.org/package/@cfware/path-router
