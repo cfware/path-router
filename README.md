@@ -1,6 +1,6 @@
 # @cfware/path-router
 
-[![Travis CI][travis-image]][travis-url]
+![Tests][tests-status]
 [![Greenkeeper badge][gk-image]](https://greenkeeper.io/)
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
@@ -39,8 +39,7 @@ const root = new PathRouter({
 
 [npm-image]: https://img.shields.io/npm/v/@cfware/path-router.svg
 [npm-url]: https://npmjs.org/package/@cfware/path-router
-[travis-image]: https://travis-ci.org/cfware/path-router.svg?branch=master
-[travis-url]: https://travis-ci.org/cfware/path-router
+[tests-status]: https://github.com/cfware/activity-monitor/workflows/Tests/badge.svg
 [gk-image]: https://badges.greenkeeper.io/cfware/path-router.svg
 [downloads-image]: https://img.shields.io/npm/dm/@cfware/path-router.svg
 [downloads-url]: https://npmjs.org/package/@cfware/path-router
