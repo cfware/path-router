@@ -2,5 +2,4 @@
 .github
 test.js
 nyc.config.cjs
-.nyc_output
 coverage

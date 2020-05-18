@@ -1,20 +1,6 @@
-# @cfware/path-router
-
-![Tests][tests-status]
-[![Greenkeeper badge][gk-image]](https://greenkeeper.io/)
-[![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
-[![MIT][license-image]](LICENSE)
+# @cfware/path-router [![NPM Version][npm-image]][npm-url]
 
 Basic path based callback routing.
-
-### Install @cfware/path-router
-
-This module requires node.js 13.8.0 or above.
-
-```sh
-npm i --save @cfware/path-router
-```
 
 ## Usage
 
@@ -39,8 +25,3 @@ const root = new PathRouter({
 
 [npm-image]: https://img.shields.io/npm/v/@cfware/path-router.svg
 [npm-url]: https://npmjs.org/package/@cfware/path-router
-[tests-status]: https://github.com/cfware/path-router/workflows/Tests/badge.svg
-[gk-image]: https://badges.greenkeeper.io/cfware/path-router.svg
-[downloads-image]: https://img.shields.io/npm/dm/@cfware/path-router.svg
-[downloads-url]: https://npmjs.org/package/@cfware/path-router
-[license-image]: https://img.shields.io/npm/l/@cfware/path-router.svg
