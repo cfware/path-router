@@ -1,6 +1,5 @@
 import t from 'libtap';
 
-// eslint-disable-next-line import/no-unresolved
 import PathRouter from '@cfware/path-router';
 
 const fn0 = () => {};
