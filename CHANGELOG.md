@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/cfware/path-router/compare/v0.1.3...v0.2.0) (2020-12-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rewrite API for better tersing
+
+### Features
+
+* Rewrite API for better tersing ([b142fd9](https://github.com/cfware/path-router/commit/b142fd994fe724650bba008495c38023699bbe96))
+
 ### [0.1.3](https://github.com/cfware/path-router/compare/v0.1.2...v0.1.3) (2020-02-10)
 
 
