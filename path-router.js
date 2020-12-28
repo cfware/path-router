@@ -1,89 +1,37 @@
-const defaultOptions = {
-	exact: {},
-	prefixes: {},
-	routers: {}
+export const createRouter = defaultCallback => ({
+	_exactRoutes: {},
+	_subRouters: {},
+	_defaultRoute: defaultCallback
+});
+
+export const setExactRoute = (router, pathname, callback) => {
+	router._exactRoutes[pathname] = callback;
 };
 
-class PathRouter {
-	_exactRoutes = {};
-	_routers = {};
+export const setSubRouter = (router, subPath, subRouter) => {
+	router._subRouters[subPath] = subRouter;
+};
 
-	constructor(options) {
-		if (typeof options === 'function') {
-			options = {
-				...defaultOptions,
-				defaultCallback: options
-			};
-		} else {
-			options = {
-				...defaultOptions,
-				...options
-			};
-		}
+export const findRoute = (router, pathname) => {
+	if (pathname in router._exactRoutes) {
+		return fullPath => router._exactRoutes[pathname]('', fullPath);
+	}
 
-		this._defaultCallback = options.defaultCallback;
-		for (const [pathname, callback] of Object.entries(options.exact)) {
-			this.add(pathname, callback);
-		}
-
-		for (const [basepath, prefixOptions] of Object.entries(options.prefixes)) {
-			this.addPrefix(basepath, prefixOptions);
-		}
-
-		for (const [basepath, pathRouter] of Object.entries(options.routers)) {
-			this.addRouter(basepath, pathRouter);
+	const subrouterMatches = Object.keys(router._subRouters)
+		.filter(p => pathname.startsWith(p))
+		.sort((a, b) => b.length - a.length);
+	for (const subrouterPath of subrouterMatches) {
+		const subrouter = router._subRouters[subrouterPath];
+		const tailPath = pathname.replace(subrouterPath, '');
+		const callback = findRoute(subrouter, tailPath);
+		if (callback) {
+			return callback;
 		}
 	}
 
-	add(pathname, callback) {
-		if (pathname in this._exactRoutes) {
-			throw new Error(`Route already exists for ${pathname}`);
-		}
-
-		this._exactRoutes[pathname] = callback;
+	if (router._defaultRoute) {
+		return fullPath => router._defaultRoute(pathname, fullPath);
 	}
+};
 
-	addPrefix(basepath, prefixOptions) {
-		if (basepath in this._routers) {
-			throw new Error(`Subroute already exists for ${basepath}`);
-		}
-
-		this._routers[basepath] = new PathRouter(prefixOptions);
-	}
-
-	addRouter(basepath, pathRouter) {
-		if (basepath in this._routers) {
-			throw new Error(`Subroute already exists for ${basepath}`);
-		}
-
-		this._routers[basepath] = pathRouter;
-	}
-
-	findRoute(pathname) {
-		if (pathname in this._exactRoutes) {
-			return fullPath => this._exactRoutes[pathname]('', fullPath);
-		}
-
-		const [subrouterPath] = Object.keys(this._routers)
-			.filter(p => pathname.startsWith(p))
-			.sort((a, b) => b.length - a.length);
-		if (typeof subrouterPath === 'string') {
-			const router = this._routers[subrouterPath];
-			const tailPath = pathname.replace(subrouterPath, '');
-			const callback = router.findRoute(tailPath);
-			if (callback) {
-				return callback;
-			}
-		}
-
-		if (this._defaultCallback) {
-			return fullPath => this._defaultCallback(pathname, fullPath);
-		}
-	}
-
-	executeRoute(pathname) {
-		return this.findRoute(pathname)(pathname);
-	}
-}
-
-export default PathRouter;
+export const executeRoute = (router, pathname) => findRoute(router, pathname)(pathname);
